@@ -14,7 +14,10 @@ class TestPaginaInicial(unittest.TestCase):
         # Ela acessa a página inicial e vê "Lista de Tarefas"
         self.browser.get('http://localhost:8000')
         self.assertIn('Lista de Tarefas', self.browser.title)
+
         # Ela percebe que há um cabeçalho escrito "Tarefas".
+        h1 = self.browser.find_element_by_tag_name('h1')
+        self.assertIn(h1.text, 'Tarefas')
 
         # Abaixo deste cabeçalho, há um campo em branco (input field)
         # para inserir uma nova tarefa.
