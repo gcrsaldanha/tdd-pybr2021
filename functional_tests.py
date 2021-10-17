@@ -23,7 +23,7 @@ class TestPaginaInicial(unittest.TestCase):
 
         # Abaixo deste cabeçalho, há um campo em branco (input field)
         # para inserir uma nova tarefa.
-        input_field = self.browser.find_element_by_tag_name('input')
+        input_field = self.browser.find_element_by_id('id_novo_item')
 
         # Ela digita "Comprar livro de TDD"
         input_field.send_keys('Comprar livro de TDD')

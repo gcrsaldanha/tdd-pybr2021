@@ -1,8 +1,11 @@
 <html>
     <title>Lista de Tarefas</title>
     <h1>Tarefas</h1>
-    <input />
+    <form method="post" action="">
+        {% csrf_token %}
+        <input id="id_novo_item" name="texto_novo_item"/>
+    </form>
     <table>
-        <tr><td>1: Comprar livro de TDD</td></tr>
+        <tr><td>1: {{ texto_novo_item }}</td></tr>
     </table>
 </html>
