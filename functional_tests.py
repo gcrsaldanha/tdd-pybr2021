@@ -29,7 +29,6 @@ class TestPaginaInicial(unittest.TestCase):
         input_field.send_keys('Comprar livro de TDD')
 
         # Ao apertar enter, um novo item numerado aparece na lista
-        # input_field = self.browser.find_element_by_tag('input')
         input_field.send_keys(Keys.ENTER)
         time.sleep(1)
         tabela = self.browser.find_element_by_tag_name('table')
@@ -39,7 +38,17 @@ class TestPaginaInicial(unittest.TestCase):
             rows[0].text,
         )
 
-        # Maria então adiciona uma nova tarefa: "Terminar palestra de Pyhton" (numerada como 2).
+        # Maria então adiciona uma nova tarefa: "Terminar palestra de Python" (numerada como 2).
+        input_field = self.browser.find_element_by_id('id_novo_item')
+        input_field.send_keys('Terminar palestra de Python')
+        time.sleep(1)
+        tabela = self.browser.find_element_by_tag_name('table')
+        rows = tabela.find_elements_by_tag_name('tr')
+        self.assertIn(
+            '2: Comprar livro de TDD',
+            rows[1].text,
+        )
+
         # Maria percebe que ao lado de cada tarefa há 3 opções (indicadas por ícones):
         # - Concluir
         # - Excluir
