@@ -11,10 +11,18 @@ def pagina_inicial(request: HttpRequest):
         tarefa = Tarefa()
         tarefa.texto = texto_novo_item
         tarefa.save()
-
+        tarefas = Tarefa.objects.all()
         return render(
             request=request,
             template_name='pagina_inicial.html',
-            context={'texto_novo_item': texto_novo_item},
+            context={'tarefas': tarefas},
         )
-    return render(request=request, template_name='pagina_inicial.html')
+
+    tarefas = Tarefa.objects.all()
+    return render(
+        request=request,
+        template_name='pagina_inicial.html',
+        context={
+            'tarefas': tarefas,
+        }
+    )

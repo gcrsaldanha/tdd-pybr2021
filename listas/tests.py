@@ -4,7 +4,7 @@ from .models import Tarefa
 
 class TestPaginaInicial(TestCase):
     def test_pagina_inicial_renderiza_html_correto(self):
-        response = self.client.get('')
+        response = self.client.get('/')
         self.assertTemplateUsed(response, 'pagina_inicial.html')
 
     def test_recebe_post_request(self):
@@ -18,6 +18,13 @@ class TestPaginaInicial(TestCase):
 
         tarefa_db = Tarefa.objects.get()
         self.assertEqual(tarefa_db.texto, 'Comprar livro de TDD')
+
+    def test_GET_retorna_template_com_tarefas_existentes(self):
+        Tarefa.objects.create(texto='Primeira tarefa')
+        Tarefa.objects.create(texto='Segunda tarefa')
+        response = self.client.get('/')
+        self.assertIn('Primeira tarefa', response.content.decode())
+        self.assertIn('Segunda tarefa', response.content.decode())
 
 
 class TestTarefaModel(TestCase):
