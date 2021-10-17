@@ -1,5 +1,7 @@
 import unittest
+import time
 from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 
 
 class TestPaginaInicial(unittest.TestCase):
@@ -21,10 +23,21 @@ class TestPaginaInicial(unittest.TestCase):
 
         # Abaixo deste cabeçalho, há um campo em branco (input field)
         # para inserir uma nova tarefa.
+        input_field = self.browser.find_element_by_tag_name('input')
 
         # Ela digita "Comprar livro de TDD"
+        input_field.send_keys('Comprar livro de TDD')
 
         # Ao apertar enter, um novo item numerado aparece na lista
+        # input_field = self.browser.find_element_by_tag('input')
+        input_field.send_keys(Keys.ENTER)
+        time.sleep(1)
+        tabela = self.browser.find_element_by_tag_name('table')
+        rows = tabela.find_elements_by_tag_name('tr')
+        self.assertIn(
+            '1: Comprar livro de TDD',
+            rows[0].text,
+        )
 
         # Maria então adiciona uma nova tarefa: "Terminar palestra de Pyhton" (numerada como 2).
         # Maria percebe que ao lado de cada tarefa há 3 opções (indicadas por ícones):
