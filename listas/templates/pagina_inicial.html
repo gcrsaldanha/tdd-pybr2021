@@ -7,7 +7,7 @@
     </form>
     <table>
         {% for tarefa in tarefas %}
-            <tr><td>1: {{ tarefa.texto }}</td></tr>
+            <tr><td>{{ forloop.counter }}: {{ tarefa.texto }}</td></tr>
         {% endfor %}
     </table>
 </html>

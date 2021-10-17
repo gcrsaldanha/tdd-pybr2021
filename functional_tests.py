@@ -1,10 +1,10 @@
-import unittest
 import time
+from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
 
-class TestPaginaInicial(unittest.TestCase):
+class TestPaginaInicial(LiveServerTestCase):
     def setUp(self):
         self.browser = webdriver.Chrome()
 
@@ -14,7 +14,7 @@ class TestPaginaInicial(unittest.TestCase):
     def test_pagina_inicial(self):
         # Maria ouviu falar de um novo site de lista de tarefas (To-Do Lists)
         # Ela acessa a página inicial e vê "Lista de Tarefas"
-        self.browser.get('http://localhost:8000')
+        self.browser.get(self.live_server_url)
         self.assertIn('Lista de Tarefas', self.browser.title)
 
         # Ela percebe que há um cabeçalho escrito "Tarefas".
@@ -41,11 +41,12 @@ class TestPaginaInicial(unittest.TestCase):
         # Maria então adiciona uma nova tarefa: "Terminar palestra de Python" (numerada como 2).
         input_field = self.browser.find_element_by_id('id_novo_item')
         input_field.send_keys('Terminar palestra de Python')
+        input_field.send_keys(Keys.ENTER)
         time.sleep(1)
         tabela = self.browser.find_element_by_tag_name('table')
         rows = tabela.find_elements_by_tag_name('tr')
         self.assertIn(
-            '2: Comprar livro de TDD',
+            '2: Terminar palestra de Python',
             rows[1].text,
         )
 
@@ -63,7 +64,3 @@ class TestPaginaInicial(unittest.TestCase):
         # O input field é populado com o texto da tarefa e Maria consegue atualizá-la.
 
         # Maria, por fim, decide excluir a tarefa 1. Ao fazer isso, a tarefa excluída some.
-
-
-if __name__ == '__main__':
-    unittest.main()
